@@ -6,14 +6,18 @@
 package br.edu.ifpb.tcc.persistencia;
 
 import br.edu.ifpb.tcc.beans.Tabela;
+import br.edu.ifpb.tcc.beans.Tupla;
 import br.edu.ifpb.tcc.persistencia.util.Conexao;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,7 +60,7 @@ public class TabelaDAO {
     }
 
     public static void persisteArquivo(Tabela t, List<String> dados) {
-        createTable(t);
+        //createTable(t);
         String sql = geraQueryInsercao(t);
 
         connection = Conexao.getInstance().createConnection();
@@ -67,9 +71,11 @@ public class TabelaDAO {
             Calendar data = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH_mm_ss");
             String dataFormat = df.format(data.getTime());
-            BufferedWriter writer = new BufferedWriter(new FileWriter(t.getName() + "-gerado-" + dataFormat + ".txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Magdiel Ildefonso\\"
+                    + "Documents\\arquivo-gerados-tcc\\" + t.getName() + "-gerado-" + dataFormat + ".txt"));
+
             String novaLinha = "";
-            int qtde=0;
+            int qtde = 0;
 
             for (String dado : dados) {
                 String[] d = dado.split(";");
@@ -85,7 +91,7 @@ public class TabelaDAO {
                     writer.write(novaLinha);
                 }
             }
-            
+
             writer.close();
             pst.close();
             connection.close();
@@ -107,5 +113,56 @@ public class TabelaDAO {
         }
         sql = sql.substring(0, sql.length() - 1) + ")";
         return sql;
+    }
+
+    public static boolean persisteTheGeom(Tabela t, String theGeom, int gid) {
+        boolean result = false;
+        String sql = "update " + t.getName() + "set the_geom = ?"
+                + "where gid = ?";
+        try {
+            connection = Conexao.getInstance().createConnection();
+            PreparedStatement pst;
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, theGeom);
+            pst.setInt(2, gid);
+            pst.execute();
+            pst.close();
+            result = true;
+            pst.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public static List<Tupla> getTuplas(Tabela tabela) {
+        List<Tupla> tuplas = new ArrayList<>();
+
+        String sql = "select * from " + tabela.getName();
+
+        try {
+            connection = Conexao.getInstance().createConnection();
+            PreparedStatement pst;
+            pst = connection.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            while (rs.next()) {
+                Tupla tupla = new Tupla();
+                tupla.setId(rs.getInt(1));
+                for (int i = 2; i <= rsmd.getColumnCount(); i++) {
+                    tupla.add(rs.getString(i));
+                }
+                tuplas.add(tupla);
+            }
+
+            pst.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return tuplas;
     }
 }

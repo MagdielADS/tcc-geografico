@@ -16,6 +16,7 @@ import java.util.List;
  * @author Magdiel Ildefonso
  */
 public class Fachada {
+
     public Local geometriaMaisInterna(Mapeamento m) {
         Local local = null;
 
@@ -47,8 +48,10 @@ public class Fachada {
         if (util.size() > 0) {
             if (mapeamento.getRegiao() != null) {
                 mapeamento.setEstado(localReferente(mapeamento.getRegiao(), util));
+
             } else {
                 mapeamento.setEstado(util.get(0));
+
             }
         }
 
@@ -56,10 +59,13 @@ public class Fachada {
         if (util.size() > 0) {
             if (mapeamento.getEstado() != null) {
                 mapeamento.setMesorregiao(localReferente(mapeamento.getEstado(), util));
+
             } else if (mapeamento.getRegiao() != null) {
                 mapeamento.setMesorregiao(localReferente(mapeamento.getRegiao(), util));
+
             } else {
                 mapeamento.setMesorregiao(util.get(0));
+
             }
         }
 
@@ -67,12 +73,16 @@ public class Fachada {
         if (util.size() > 0) {
             if (mapeamento.getMesorregiao() != null) {
                 mapeamento.setMicrorregiao(localReferente(mapeamento.getMesorregiao(), util));
+                //mapeamento.setControle(localReferente(mapeamento.getMesorregiao(), util).getNome());
             } else if (mapeamento.getEstado() != null) {
                 mapeamento.setMicrorregiao(localReferente(mapeamento.getEstado(), util));
+                //mapeamento.setControle(localReferente(mapeamento.getEstado(), util).getNome());
             } else if (mapeamento.getRegiao() != null) {
                 mapeamento.setMicrorregiao(localReferente(mapeamento.getRegiao(), util));
+                //mapeamento.setControle(localReferente(mapeamento.getRegiao(), util).getNome());
             } else {
                 mapeamento.setMicrorregiao(util.get(0));
+                //mapeamento.setControle(util.get(0).getNome());
             }
         }
 
@@ -80,14 +90,19 @@ public class Fachada {
         if (util.size() > 0) {
             if (mapeamento.getMicrorregiao() != null) {
                 mapeamento.setMunicipio(localReferente(mapeamento.getMicrorregiao(), util));
+                //mapeamento.setControle(localReferente(mapeamento.getMicrorregiao(), util).getNome());
             } else if (mapeamento.getMesorregiao() != null) {
                 mapeamento.setMunicipio(localReferente(mapeamento.getMesorregiao(), util));
+                // mapeamento.setControle(localReferente(mapeamento.getMesorregiao(), util).getNome());
             } else if (mapeamento.getEstado() != null) {
                 mapeamento.setMunicipio(localReferente(mapeamento.getEstado(), util));
+                // mapeamento.setControle(localReferente(mapeamento.getEstado(), util).getNome());
             } else if (mapeamento.getRegiao() != null) {
                 mapeamento.setMunicipio(localReferente(mapeamento.getRegiao(), util));
+                //mapeamento.setControle(localReferente(mapeamento.getRegiao(), util).getNome());
             } else {
                 mapeamento.setMunicipio(util.get(0));
+                //mapeamento.setControle(util.get(0).getNome());
             }
         }
         return mapeamento;

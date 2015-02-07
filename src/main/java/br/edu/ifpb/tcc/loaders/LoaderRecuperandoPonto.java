@@ -25,14 +25,14 @@ public class LoaderRecuperandoPonto {
         //Setando uma lista com possíveis resultados de um arquivo
         List<String> resultados = new ArrayList<>();
 
-        resultados.add("2011");
-        resultados.add("UNIVERSIDADE FEDERAL DE MATO GROSSO");
-        resultados.add("UFMT");
-        resultados.add("33004540000100");
-        resultados.add("5");
-        resultados.add("Centro_Oeste");
-        resultados.add("MATO GROSSO");
-        resultados.add("CUIABA");
+        //resultados.add("2011");
+        //resultados.add("UNIVERSIDADE FEDERAL DE MATO GROSSO");
+        //resultados.add("UFMT");
+       // resultados.add("33004540000100");
+        //resultados.add("5");
+        resultados.add("Centro-oeste");
+        resultados.add("Distrito federal");
+        resultados.add("Brasília");
 
         //Recuperando dos resultados apenas os que são locais
         List<Local> locais = new ArrayList<>();
@@ -42,7 +42,7 @@ public class LoaderRecuperandoPonto {
         }
         //Locais recuperados
         for (Local local : locais) {
-            System.out.println("Local: " + local.getNome() + " Tipo: " + local.getTipo());
+            //System.out.println("Local: " + local.getNome() + " Tipo: " + local.getTipo());
         }
         //Construindo mapeamento a partir da lista de locais
         Mapeamento map = f.construirMapeamento(locais);

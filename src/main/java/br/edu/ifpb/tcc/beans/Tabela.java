@@ -15,10 +15,19 @@ import java.util.List;
  */
 public class Tabela {
     private String nome;
+    private int gid;
     private List<String> colunas;
 
     public Tabela(){
         colunas = new ArrayList<>();
+    }
+
+    public int getGid() {
+        return gid;
+    }
+
+    public void setGid(int gid) {
+        this.gid = gid;
     }
     
     public String getName() {

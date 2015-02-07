@@ -46,6 +46,9 @@ public class GazetteerDAO {
                 local.setGeometria(rs.getString("geo"));
                 locais.add(local);
             }
+            rs.close();
+            pst.close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(GazetteerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,6 +68,9 @@ public class GazetteerDAO {
             if (rs.next()) {
                 centroide = rs.getString("centroide");
             }
+            rs.close();
+            pst.close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(GazetteerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -85,6 +91,9 @@ public class GazetteerDAO {
                 p.setLatitude(String.valueOf(rs.getFloat("lat")));
                 p.setLongitude(String.valueOf(rs.getFloat("long")));
             }
+            rs.close();
+            pst.close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(GazetteerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,6 +116,10 @@ public class GazetteerDAO {
             if (rs.next()) {
                 result = rs.getBoolean("contem");
             }
+            
+            rs.close();
+            pst.close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(GazetteerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

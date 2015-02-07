@@ -20,11 +20,23 @@ public class Mapeamento {
     private Local mesorregiao;
     private Local microrregiao;
     private Local municipio;
+    private String controle;
 
+    public Mapeamento() {
+        controle = "";
+    }
+    
     public Local getPais() {
         return pais;
     }
 
+    public String getControle() {
+        return controle;
+    }
+
+    public void setControle(String controle) {
+        this.controle += controle;
+    }
     public void setPais(Local pais) {
         this.pais = pais;
     }
